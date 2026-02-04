@@ -1,0 +1,18 @@
+<div class="app-shell">
+  <header class="navbar">
+    <div class="container navbar-content">
+      <a href="/" class="brand">Shop<span class="dot">.</span></a>
+      <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/products" routerLinkActive="active">Products</a>
+      </nav>
+      <div class="actions">
+        <!-- Placeholder for future actions -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
