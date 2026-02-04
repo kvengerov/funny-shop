@@ -1,12 +1,22 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { SessionService } from '@entities/session';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, ButtonComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('shop');
+  protected readonly sessionService = inject(SessionService);
+  private readonly router = inject(Router);
+
+  logout() {
+    this.sessionService.logout();
+    this.router.navigate(['/']);
+  }
 }

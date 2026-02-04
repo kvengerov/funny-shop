@@ -63,6 +63,62 @@ const products = [
     }
 ];
 
+const users = [
+    {
+        id: '1',
+        email: 'john.doe@example.com',
+        username: 'johndoe',
+        firstName: 'John',
+        lastName: 'Doe',
+        avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+        role: 'user'
+    },
+    {
+        id: '2',
+        email: 'admin@funny-shop.com',
+        username: 'admin',
+        firstName: 'System',
+        lastName: 'Administrator',
+        avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',
+        role: 'admin'
+    },
+    {
+        id: '3',
+        email: 'manager@funny-shop.com',
+        username: 'manager',
+        firstName: 'Sales',
+        lastName: 'Manager',
+        avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Manager',
+        role: 'manager'
+    }
+];
+
+app.post('/api/auth/login', (req, res) => {
+    const { username, password } = req.body;
+    // Simple mock logic: any password works for known users
+    const user = users.find(u => u.username === username);
+    if (user) {
+        res.json({ ...user, token: 'mock-jwt-token-' + user.id });
+    } else {
+        res.status(401).json({ message: 'Invalid credentials' });
+    }
+});
+
+app.post('/api/auth/register', (req, res) => {
+    const { email, username, firstName, lastName } = req.body;
+    const newUser = {
+        id: String(users.length + 1),
+        email,
+        username,
+        firstName,
+        lastName,
+        role: 'user',
+        token: 'mock-jwt-token-' + (users.length + 1)
+    };
+    users.push(newUser);
+    res.json(newUser);
+});
+
 app.get('/api/products', (req, res) => {
     res.json(products);
 });
@@ -74,6 +130,52 @@ app.get('/api/products/:id', (req, res) => {
     } else {
         res.status(404).json({ message: 'Product not found' });
     }
+});
+
+app.get('/api/user-profile', (req, res) => {
+    // Return regular user by default, or admin if requested via query
+    const isAdmin = req.query.admin === 'true';
+    const user = isAdmin ? users[1] : users[0];
+    res.json(user);
+});
+
+app.get('/api/admin/stats', (req, res) => {
+    res.json([
+        {
+            label: 'Total Revenue',
+            value: '$45,231',
+            trend: '↑ 12% from last month',
+            trendUp: true,
+            icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.546 1.16 3.698 1.16 5.244 0l.879-.659M12 6a4.002 4.002 0 0 0-3.203 1.392L8 8.417m4-2.417a4.002 4.002 0 0 1 3.203 1.392l.8 1.025M12 18a4.002 4.002 0 0 1-3.203-1.392l-.8-1.025M12 18a4.002 4.002 0 0 0 3.203-1.392l.8-1.025M3.375 19.5h17.25m-17.25-3h17.25m-17.25-3h17.25m-17.25-3h17.25m-17.25-3h17.25M6.75 3v18m10.5-18v18" />',
+            iconClass: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400',
+            progress: 70,
+            progressClass: 'bg-emerald-500'
+        },
+        {
+            label: 'New Users',
+            value: '1,234',
+            trend: '↑ 5% from last month',
+            trendUp: true,
+            icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />',
+            iconClass: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400'
+        },
+        {
+            label: 'Active Tasks',
+            value: '42',
+            trend: 'Upcoming deadlines',
+            trendUp: false,
+            icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />',
+            iconClass: 'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400'
+        },
+        {
+            label: 'Inventory Status',
+            value: '94%',
+            trend: 'Optimal performance',
+            trendUp: false,
+            icon: '<path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-5.25v9" />',
+            iconClass: 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400'
+        }
+    ]);
 });
 
 app.listen(port, () => {

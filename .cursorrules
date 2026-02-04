@@ -41,3 +41,32 @@ When generating new code, strictly follow these rules:
   - `index.ts` as the Public API (export only what's needed).
 - **Naming**: Use `kebab-case` for folders and files (e.g., `product-card.component.ts`).
 - **Isolation**: Never import from the internal folders of another slice. Use the Public API (`@layer/slice`).
+
+## 6. Visual Style Guide (Admin & UI)
+When building UI/Admin panels, follow these design principles:
+- **Layout**: Use a "Dashboard" layout: a fixed sidebar on the left and a scrollable main area with `bg-slate-50` background.
+- **Surfaces**: Use white cards (`bg-white`) with rounded corners (`rounded-xl`) and a very subtle border (`border-slate-200/60`). 
+- **Shadows**: Prefer `shadow-sm` for cards and `shadow-lg` for modals/dropdowns. Avoid heavy dark shadows.
+- **Inputs**: Use a consistent style for all form fields:
+  - Height: `h-10` or `h-11`.
+  - Border: `border-slate-300` with `focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600`.
+  - Font: `text-sm`.
+- **Buttons**:
+  - Primary: `bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 transition-all`.
+  - Secondary: `bg-white border border-slate-300 text-slate-700 hover:bg-slate-50`.
+- **Tables**: Use `w-full`, `text-left`, with a header `bg-slate-50/50` and subtle row borders.
+
+## 7. Forms & Validation
+- **Technique**: Use Angular Reactive Forms (`FormBuilder`, `FormGroup`).
+- **Validation**: 
+  - Show validation errors only when the field is `touched` or `dirty`.
+  - Use `text-red-500 text-xs mt-1` for error messages.
+  - Highlight input borders in `border-red-500` when invalid.
+- **Submit**: Disable the submit button if the form is `invalid` or `pending`.
+- **Logic**: Keep form logic in the component, and move data-sending logic to the slice's `api/` service.
+
+## 8. Premium UI Elements (Dashboard)
+- **Empty States**: If a table is empty, show a centered `div` with a subtle icon, a gray text "No data found", and a "Create New" button.
+- **Loading States**: Use "Skeleton" loaders (pulsing gray blocks) instead of a simple "Loading..." text.
+- **Cards**: Add a hover effect to dashboard cards: `hover:translate-y-[-2px] transition-all duration-300`.
+- **Badges**: For statuses (Active, Pending, Deleted), use rounded-full badges with 10% opacity background of the main color (e.g., `bg-green-500/10 text-green-600`).
