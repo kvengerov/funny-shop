@@ -2,7 +2,7 @@ services:
   shop-prod:
     build:
       context: .
-      dockerfile: .docker/Dockerfile
+      dockerfile: .docker/Dockerfile.prod
     container_name: shop-prod
     ports:
       - "80:80"

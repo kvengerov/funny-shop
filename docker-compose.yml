@@ -12,16 +12,15 @@ services:
       - "4200:4200"
     environment:
       - CHOKIDAR_USEPOLLING=true # Essential for Windows hot reload
-    
+
   api:
     build:
       context: ./mock-server
-      dockerfile: Dockerfile
+      dockerfile: ../.docker/Dockerfile.api
     container_name: shop-api
     ports:
       - "8080:8080"
     restart: unless-stopped
-
   # Production Test Service (Optional, commented out)
   # prod:
   #   build:
