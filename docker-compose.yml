@@ -2,11 +2,11 @@ services:
   # Development Service
   dev:
     build:
-      context: .
-      dockerfile: .docker/Dockerfile.dev
+      context: ./frontend
+      dockerfile: ../.docker/Dockerfile.dev
     container_name: shop-dev
     volumes:
-      - .:/app
+      - ./frontend:/app
       - /app/node_modules
     ports:
       - "4200:4200"
@@ -15,7 +15,7 @@ services:
 
   api:
     build:
-      context: ./mock-server
+      context: ./backend
       dockerfile: ../.docker/Dockerfile.api
     container_name: shop-api
     ports:
@@ -24,8 +24,8 @@ services:
   # Production Test Service (Optional, commented out)
   # prod:
   #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
+  #     context: ./frontend
+  #     dockerfile: ../.docker/Dockerfile.prod
   #   container_name: shop-prod
   #   ports:
   #     - "8080:80"

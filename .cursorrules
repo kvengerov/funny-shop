@@ -1,7 +1,7 @@
-# Angular FSD & Modern Standards Rules
+# Angular 21+ FSD & Playwright Excellence Rules
 
-You are an expert in Angular, Tailwind CSS, and Feature-Sliced Design (FSD) architecture.
-Your goal is to write maintainable, performant, and strictly typed code.
+You are an expert in Angular 21+, Tailwind CSS, Feature-Sliced Design (FSD), and Playwright testing.
+Your goal is to write maintainable, performant, and strictly typed code following modern standards.
 
 ## 1. Architectural Structure (FSD)
 Adhere to the layer hierarchy (from bottom to top):
@@ -12,61 +12,40 @@ Adhere to the layer hierarchy (from bottom to top):
 - `pages`: Full application pages.
 - `app`: Routing, global styles, providers.
 
-**Crucial:** A layer can only import from layers strictly BELOW it.
+**Crucial:** A layer can only import from layers strictly BELOW it. Use Public APIs (`index.ts`).
 
-## 2. Technical Stack & Patterns
-- **Signals:** Use `signal`, `computed`, and `effect` instead of `BehaviorSubject` wherever possible.
-- **Modern Syntax:** Use new Control Flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`.
-- **Change Detection:** Always set `changeDetection: ChangeDetectionStrategy.OnPush` in component decorators.
-- **Standalone:** Use Standalone components only. No `NgModule` unless required by 3rd party libs.
-- **RxJS:** Use `toSignal` for converting `HttpClient` streams into signals.
+## 2. Technical Stack (Angular 21+ & Zoneless)
+- **Zoneless**: Application is Zoneless. Never use `NgZone`. Use `provideExperimentalZonelessChangeDetection()`.
+- **Signals**: Mandatory for state. Use `signal`, `computed`, `effect`, `input()`, and `viewChild()`.
+- **Modern Syntax**: Strictly use Control Flow (`@if`, `@for`, `@switch`).
+- **RxJS**: Use ONLY for async streams (HTTP). Convert to signals via `toSignal()` for UI.
+- **DI**: Use `inject(Service)` at the field level.
 
-## 3. Styling (Tailwind CSS)
-- Use Tailwind classes exclusively. Avoid `styles` or `styleUrls` sections in components.
-- Use `clsx` or `tailwind-merge` for dynamic classes if available.
-- Follow a mobile-first responsive approach.
+## 3. Testing Strategy (Playwright)
+When writing or reviewing tests (`.spec.ts` or `tests/` folder):
+- **Locators**: Use `page.getByRole()`, `page.getByText()`, or `page.getByTestId()`.
+- **Stability**: Use Web-First assertions (`expect().toBeVisible()`, `expect().toHaveText()`).
+- **Zoneless Testing**: Rely on Playwright's auto-waiting for Signal-based DOM updates.
+- **Mocking**: Use `page.route()` for API mocking to maintain E2E isolation.
+- **Reference**: Always follow `.agent/skills/angular-playwright/SKILL.md`.
 
-## 4. Code Quality
-- Use `inject(Service)` instead of constructor-based injection.
-- Strict typing: No `any`. Move complex types to an `interface` within the `model` folder of the current layer.
-- Naming convention: `kebab-case.component.ts`, `kebab-case.service.ts`.
+## 4. Styling & UI (Tailwind CSS)
+- **Framework**: Tailwind CSS exclusively. No `styles` blocks.
+- **Layout**: Dashboard style (fixed sidebar, `bg-slate-50` main area).
+- **Surfaces**: `bg-white`, `rounded-xl`, `border-slate-200/60`, `shadow-sm`.
+- **Interactive**: `hover:translate-y-[-2px] transition-all duration-300`.
 
-## 5. Component Generation & File Structure
-When generating new code, strictly follow these rules:
-- **Location**: Always place new logic in the appropriate FSD layer (`shared`, `entities`, `features`, `widgets`, `pages`).
-- **Internal Structure**: Every slice must contain:
-  - `ui/` for components.
-  - `model/` for interfaces, types, and signals.
-  - `api/` for services/HTTP calls.
-  - `index.ts` as the Public API (export only what's needed).
-- **Naming**: Use `kebab-case` for folders and files (e.g., `product-card.component.ts`).
-- **Isolation**: Never import from the internal folders of another slice. Use the Public API (`@layer/slice`).
+## 5. Component Generation
+- **Location**: Strictly follow FSD layers.
+- **Internal Structure**: Every slice must have `ui/`, `model/` (interfaces/signals), `api/`, and `index.ts`.
+- **Naming**: `kebab-case.component.ts`.
+- **Change Detection**: `ChangeDetectionStrategy.OnPush` is default.
 
-## 6. Visual Style Guide (Admin & UI)
-When building UI/Admin panels, follow these design principles:
-- **Layout**: Use a "Dashboard" layout: a fixed sidebar on the left and a scrollable main area with `bg-slate-50` background.
-- **Surfaces**: Use white cards (`bg-white`) with rounded corners (`rounded-xl`) and a very subtle border (`border-slate-200/60`). 
-- **Shadows**: Prefer `shadow-sm` for cards and `shadow-lg` for modals/dropdowns. Avoid heavy dark shadows.
-- **Inputs**: Use a consistent style for all form fields:
-  - Height: `h-10` or `h-11`.
-  - Border: `border-slate-300` with `focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600`.
-  - Font: `text-sm`.
-- **Buttons**:
-  - Primary: `bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 transition-all`.
-  - Secondary: `bg-white border border-slate-300 text-slate-700 hover:bg-slate-50`.
-- **Tables**: Use `w-full`, `text-left`, with a header `bg-slate-50/50` and subtle row borders.
+## 6. Forms & Validation
+- **Technique**: Reactive Forms.
+- **UI**: Validation errors on `touched/dirty`. `text-red-500 text-xs`.
+- **Submission**: Disable button if `invalid` or `pending`.
 
-## 7. Forms & Validation
-- **Technique**: Use Angular Reactive Forms (`FormBuilder`, `FormGroup`).
-- **Validation**: 
-  - Show validation errors only when the field is `touched` or `dirty`.
-  - Use `text-red-500 text-xs mt-1` for error messages.
-  - Highlight input borders in `border-red-500` when invalid.
-- **Submit**: Disable the submit button if the form is `invalid` or `pending`.
-- **Logic**: Keep form logic in the component, and move data-sending logic to the slice's `api/` service.
-
-## 8. Premium UI Elements (Dashboard)
-- **Empty States**: If a table is empty, show a centered `div` with a subtle icon, a gray text "No data found", and a "Create New" button.
-- **Loading States**: Use "Skeleton" loaders (pulsing gray blocks) instead of a simple "Loading..." text.
-- **Cards**: Add a hover effect to dashboard cards: `hover:translate-y-[-2px] transition-all duration-300`.
-- **Badges**: For statuses (Active, Pending, Deleted), use rounded-full badges with 10% opacity background of the main color (e.g., `bg-green-500/10 text-green-600`).
+## 7. Skill Integration
+- For deep architectural reviews, use `.agent/skills/angular-review/SKILL.md`.
+- For testing-specific tasks, use `.agent/skills/angular-playwright/SKILL.md`.
