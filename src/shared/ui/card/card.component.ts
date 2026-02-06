@@ -7,7 +7,7 @@ import { cn } from '@shared/lib/cn';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="cn('card-root rounded-2xl border border-slate-200 bg-white shadow-sm', className())">
+    <div [class]="cn('card-root app-card rounded-2xl', className())">
       <ng-content></ng-content>
     </div>
   `,

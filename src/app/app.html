@@ -1,37 +1,39 @@
 <div class="app-shell">
-  <header class="navbar">
-    <div class="container navbar-content">
-      <a href="/" class="brand">Shop<span class="dot">.</span></a>
-      <nav class="nav-links">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a routerLink="/products" routerLinkActive="active">Products</a>
-      </nav>
-      <div class="actions">
-        <div class="flex items-center gap-4">
-          @if (sessionService.isAdminOrManager()) {
-          <app-button routerLink="/admin" variant="secondary" size="sm">
-            Admin Panel
-          </app-button>
-          }
-
-          @if (sessionService.isAuth()) {
-          <div class="flex items-center gap-3">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {{ sessionService.currentUser()?.firstName }}
-            </span>
-            <app-button (onClick)="logout()" variant="outline" size="sm">
-              Logout
+  @if (!isAdminRoute) {
+    <header class="navbar">
+      <div class="container navbar-content">
+        <a href="/" class="brand">Shop<span class="dot">.</span></a>
+        <nav class="nav-links">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+          <a routerLink="/products" routerLinkActive="active">Products</a>
+        </nav>
+        <div class="actions">
+          <div class="flex items-center gap-4">
+            @if (sessionService.isAdminOrManager()) {
+            <app-button routerLink="/admin" variant="secondary" size="sm">
+              Admin Panel
             </app-button>
+            }
+
+            @if (sessionService.isAuth()) {
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-medium app-text-muted">
+                {{ sessionService.currentUser()?.firstName }}
+              </span>
+              <app-button (onClick)="logout()" variant="outline" size="sm">
+                Logout
+              </app-button>
+            </div>
+            } @else {
+            <app-button routerLink="/login" size="sm">
+              Sign In
+            </app-button>
+            }
           </div>
-          } @else {
-          <app-button routerLink="/login" size="sm">
-            Sign In
-          </app-button>
-          }
         </div>
       </div>
-    </div>
-  </header>
+    </header>
+  }
 
   <main class="main-content">
     <router-outlet></router-outlet>

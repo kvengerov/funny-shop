@@ -8,7 +8,7 @@ import { cn } from '@shared/lib/cn';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="cn('flex items-center gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900', className())">
+    <div [class]="cn('flex items-center gap-4 rounded-xl app-card p-4 transition-all app-card-hover', className())">
       <div class="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-indigo-500 to-purple-600 shadow-inner">
         @if (profile().avatarUrl) {
           <img
@@ -24,7 +24,7 @@ import { cn } from '@shared/lib/cn';
         
         @if (profile().role === 'admin') {
           <div 
-            class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-amber-400 text-[10px] text-white dark:border-gray-900"
+            class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black/40 bg-amber-400 text-[10px] text-white"
             title="Admin"
           >
             ★
@@ -33,13 +33,13 @@ import { cn } from '@shared/lib/cn';
       </div>
       
       <div class="flex flex-col min-w-0">
-        <h4 class="truncate text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h4 class="truncate text-lg font-semibold app-text-main">
           {{ profile().firstName }} {{ profile().lastName }}
         </h4>
-        <p class="truncate text-sm text-gray-500 dark:text-gray-400">
+        <p class="truncate text-sm app-text-muted">
           &#64;{{ profile().username }}
         </p>
-        <p class="mt-1 truncate text-xs font-medium text-indigo-600 dark:text-indigo-400">
+        <p class="mt-1 truncate text-xs font-medium text-indigo-300">
           {{ profile().email }}
         </p>
       </div>

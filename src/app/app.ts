@@ -13,10 +13,14 @@ import { ButtonComponent } from '@shared/ui';
 export class App {
   protected readonly title = signal('shop');
   protected readonly sessionService = inject(SessionService);
-  private readonly router = inject(Router);
+  protected readonly router = inject(Router);
 
   logout() {
     this.sessionService.logout();
     this.router.navigate(['/']);
+  }
+
+  get isAdminRoute(): boolean {
+    return this.router.url.startsWith('/admin');
   }
 }

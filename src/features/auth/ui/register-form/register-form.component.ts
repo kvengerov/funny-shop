@@ -28,16 +28,16 @@ import { AuthApiService } from '@entities/session';
 
       <div class="relative z-10 w-full max-w-lg">
         <div class="mb-8 text-center">
-          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-4xl bg-white shadow-2xl ring-1 ring-slate-100">
+          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-4xl app-surface shadow-2xl">
              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/30">
                <lucide-icon [name]="UserPlus" class="size-7"></lucide-icon>
              </div>
           </div>
-          <h1 class="text-3xl font-black tracking-tight text-slate-900 leading-tight">Create Account</h1>
-          <p class="mt-2 font-medium text-slate-500">Join the Funny Shop administrative network</p>
+          <h1 class="text-3xl font-black tracking-tight leading-tight app-text-main">Create Account</h1>
+          <p class="mt-2 font-medium app-text-muted">Join the Funny Shop administrative network</p>
         </div>
 
-        <app-card className="bg-white/80! backdrop-blur-2xl! border-white ring-1 ring-slate-200/50 p-8 shadow-2xl">
+        <app-card className="app-surface-glass border-0 p-8 shadow-2xl">
           <form class="space-y-5" [formGroup]="registerForm" (submit)="handleSubmit($event)">
             <div class="grid grid-cols-2 gap-4">
               <app-input
@@ -89,15 +89,15 @@ import { AuthApiService } from '@entities/session';
             </app-button>
           </form>
 
-          <div class="mt-8 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+          <div class="mt-8 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest app-text-soft">
             <lucide-icon [name]="Key" class="size-3"></lucide-icon>
             <span>Secure Encryption Enabled</span>
           </div>
         </app-card>
 
-        <p class="mt-8 text-center text-sm text-slate-500 font-medium">
+        <p class="mt-8 text-center text-sm font-medium app-text-muted">
           Already have an operational ID? 
-          <a routerLink="/login" class="font-black text-indigo-600 hover:text-indigo-700 underline decoration-2 underline-offset-4 decoration-indigo-600/20">Sign in</a>
+          <a routerLink="/login" class="font-black text-indigo-400 hover:text-indigo-300 underline decoration-2 underline-offset-4 decoration-indigo-400/20">Sign in</a>
         </p>
       </div>
 
@@ -112,22 +112,22 @@ import { AuthApiService } from '@entities/session';
   `,
   styles: [`
     .auth-page {
-      background: #f8fafc;
+      background: var(--color-bg-body);
       font-family: var(--font-sans);
     }
     
     .background-grid {
-      background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+      background-image: radial-gradient(color-mix(in oklab, var(--color-border) 70%, transparent) 1px, transparent 1px);
       background-size: 40px 40px;
-      opacity: 0.4;
+      opacity: 0.35;
     }
 
     .gradient-blob {
-      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-accent) 100%);
     }
 
     .gradient-2 {
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
     }
 
     .register-btn {

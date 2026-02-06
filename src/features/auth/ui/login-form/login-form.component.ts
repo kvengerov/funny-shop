@@ -28,16 +28,16 @@ import { AuthApiService } from '@entities/session';
 
       <div class="relative z-10 w-full max-w-md">
         <div class="mb-10 text-center">
-          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-4xl bg-white shadow-2xl ring-1 ring-slate-100">
+          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-4xl app-surface shadow-2xl">
              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-500/30">
                <lucide-icon [name]="User" class="size-7"></lucide-icon>
              </div>
           </div>
-          <h1 class="text-3xl font-black tracking-tight text-slate-900 leading-tight">Welcome back</h1>
-          <p class="mt-2 font-medium text-slate-500">Access your Funny Shop dashboard</p>
+          <h1 class="text-3xl font-black tracking-tight leading-tight app-text-main">Welcome back</h1>
+          <p class="mt-2 font-medium app-text-muted">Access your Funny Shop dashboard</p>
         </div>
 
-        <app-card className="bg-white/80! backdrop-blur-2xl! border-white ring-1 ring-slate-200/50 p-8 shadow-2xl">
+        <app-card className="app-surface-glass border-0 p-8 shadow-2xl">
           <form class="space-y-6" [formGroup]="loginForm" (submit)="handleSubmit($event)">
             <div class="space-y-4">
               <app-input
@@ -76,14 +76,14 @@ import { AuthApiService } from '@entities/session';
             </app-button>
           </form>
 
-          <p class="mt-8 text-center text-sm font-bold text-slate-400">
+          <p class="mt-8 text-center text-sm font-bold app-text-soft">
             Internal Management Authorization v2.1
           </p>
         </app-card>
 
-        <p class="mt-10 text-center text-sm text-slate-500 font-medium">
+        <p class="mt-10 text-center text-sm font-medium app-text-muted">
           New system administrator? 
-          <a routerLink="/register" class="font-black text-blue-600 hover:text-blue-700 underline decoration-2 underline-offset-4 decoration-blue-600/20">Create account</a>
+          <a routerLink="/register" class="font-black text-blue-400 hover:text-blue-300 underline decoration-2 underline-offset-4 decoration-blue-400/20">Create account</a>
         </p>
       </div>
 
@@ -98,22 +98,22 @@ import { AuthApiService } from '@entities/session';
   `,
   styles: [`
     .auth-page {
-      background: #f8fafc;
+      background: var(--color-bg-body);
       font-family: var(--font-sans);
     }
     
     .background-grid {
-      background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+      background-image: radial-gradient(color-mix(in oklab, var(--color-border) 70%, transparent) 1px, transparent 1px);
       background-size: 40px 40px;
-      opacity: 0.4;
+      opacity: 0.35;
     }
 
     .gradient-blob {
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-accent) 100%);
     }
 
     .gradient-2 {
-      background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+      background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
     }
 
     .login-btn {

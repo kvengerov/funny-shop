@@ -8,7 +8,7 @@ import { ProductListComponent } from '@widgets/product-list';
     imports: [CommonModule, ProductListComponent],
     template: `
     <div class="container mx-auto px-4 py-8">
-      <h1 class="mb-8 text-3xl font-bold text-gray-900">Our Products</h1>
+      <h1 class="mb-8 text-3xl font-bold app-text-main">Our Products</h1>
       <app-product-list />
     </div>
   `

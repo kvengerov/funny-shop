@@ -16,7 +16,7 @@ import { ProductCardComponent, ProductService } from '@entities/product';
           />
         }
       } @else {
-        <p class="col-span-full text-center text-gray-500">Loading products...</p>
+        <p class="col-span-full text-center app-text-muted">Loading products...</p>
       }
     </div>
   `

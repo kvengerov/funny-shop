@@ -17,13 +17,13 @@ import { cn } from '../../lib/cn';
   template: `
     <div [class]="cn('w-full', className())">
       @if (label()) {
-        <label class="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+        <label class="mb-1.5 block text-sm font-semibold app-text-muted">
           {{ label() }}
         </label>
       }
       <div class="relative">
         @if (icon()) {
-          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 app-text-soft">
             <ng-container *ngTemplateOutlet="icon()"></ng-container>
           </div>
         }
@@ -35,14 +35,14 @@ import { cn } from '../../lib/cn';
           (input)="onInput($event)"
           (blur)="onBlur()"
           [class]="cn(
-            'block w-full rounded-xl border border-slate-200 bg-white py-3 text-slate-900 shadow-sm placeholder-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 sm:text-sm',
-            icon() ? 'pl-11' : 'pl-4',
-            error() ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' : ''
+            'app-input text-sm',
+            icon() ? 'app-input-icon' : '',
+            error() ? 'border-red-500 focus:border-red-500 focus:shadow-[0_0_0_4px_rgba(239,68,68,0.15)]' : ''
           )"
         />
       </div>
       @if (error()) {
-        <p class="mt-1 text-xs text-red-500">
+        <p class="mt-1 text-xs text-red-400">
           {{ error() }}
         </p>
       }
